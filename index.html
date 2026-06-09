@@ -1,129 +1,658 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>This is Alperen Demirci</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <style>
-    body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
-    .w3-row-padding img {margin-bottom: 12px}
-    /* Set the width of the sidebar to 120px */
-    .w3-sidebar {width: 120px;background: #222;}
-    /* Add a left margin to the "page content" that matches the width of the sidebar (120px) */
-    #main {margin-left: 120px}
-    /* Remove margins from "page content" on small screens */
-    @media only screen and (max-width: 600px) {#main {margin-left: 0}}
-    </style>
-  </head>
-<body class="w3-black">
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Alperen Demirci — AI Engineer & Researcher</title>
+<meta name="description" content="Alperen Demirci — Artificial Intelligence Engineer and researcher working on computer vision, multimodal LLMs, and medical AI." />
 
-<!-- Icon Bar (Sidebar - hidden on small screens) -->
-<nav class="w3-sidebar w3-bar-block w3-small w3-hide-small w3-center">
-  <!-- Avatar image in top left corner -->
-  <a href="#" class="w3-bar-item w3-button w3-padding-large w3-black">
-    <i class="fa fa-home w3-xxlarge"></i>
-    <p>HOME</p>
-  </a>
-  <a href="#about" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
-    <i class="fa fa-user w3-xxlarge"></i>
-    <p>ABOUT</p>
-  </a>
-  <a href="#contact" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
-    <i class="fa fa-envelope w3-xxlarge"></i>
-    <p>CONTACT</p>
-  </a>
-</nav>
+<!-- ============================================================
+     FONTS (loaded from Google Fonts CDN — works on GitHub Pages)
+     ============================================================ -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
-<!-- Navbar on small screens (Hidden on medium and large screens) -->
-<div class="w3-top w3-hide-large w3-hide-medium" id="myNavbar">
-  <div class="w3-bar w3-black w3-opacity w3-hover-opacity-off w3-center w3-small">
-    <a href="#" class="w3-bar-item w3-button" style="width:25% !important">HOME</a>
-    <a href="#about" class="w3-bar-item w3-button" style="width:25% !important">ABOUT</a>
-    <a href="#contact" class="w3-bar-item w3-button" style="width:25% !important">CONTACT</a>
-  </div>
+<style>
+  /* ==========================================================
+     DESIGN TOKENS — change colors / spacing here in one place
+     ========================================================== */
+  :root {
+    --bg:        #fbfbfa;   /* page background */
+    --surface:   #ffffff;   /* cards */
+    --ink:       #18181b;   /* primary text */
+    --muted:     #55555f;   /* secondary text */
+    --faint:     #8a8a93;   /* labels, captions */
+    --line:      #e7e7e3;   /* hairline borders */
+    --accent:    #2c4a5e;   /* deep slate blue */
+    --accent-2:  #1f3848;   /* hover */
+    --accent-soft:#eef2f4;  /* tint for highlights */
+
+    --serif: "Source Serif 4", Georgia, serif;
+    --sans:  "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --mono:  "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+
+    --maxw: 1080px;
+    --side: 272px;
+  }
+
+  /* ===== reset ===== */
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  img { max-width: 100%; height: auto; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: var(--accent-2); text-decoration: underline; text-underline-offset: 2px; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+  /* ==========================================================
+     LAYOUT — sidebar + main
+     ========================================================== */
+  .wrap {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 28px;
+    display: grid;
+    grid-template-columns: var(--side) 1fr;
+    gap: 56px;
+  }
+
+  /* ---------- SIDEBAR ---------- */
+  .sidebar {
+    position: sticky;
+    top: 0;
+    align-self: start;
+    height: 100vh;
+    padding: 52px 0 40px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  .monogram {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--serif);
+    font-size: 1.4rem; font-weight: 600;
+    letter-spacing: .02em;
+    margin-bottom: 22px;
+  }
+  /* To use a photo instead of the monogram, replace the .monogram div
+     in the HTML with:  <img class="avatar" src="your-photo.jpg" alt="Alperen Demirci"> */
+  .avatar {
+    width: 64px; height: 64px; border-radius: 50%;
+    object-fit: cover; margin-bottom: 22px; border: 1px solid var(--line);
+  }
+  .name {
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    line-height: 1.2;
+    font-weight: 600;
+    margin: 0 0 6px;
+    letter-spacing: -0.01em;
+  }
+  .role {
+    color: var(--muted);
+    font-size: .94rem;
+    margin: 0 0 4px;
+  }
+  .place {
+    color: var(--faint);
+    font-family: var(--mono);
+    font-size: .76rem;
+    letter-spacing: .02em;
+    margin: 0 0 26px;
+  }
+
+  .contact { list-style: none; margin: 0 0 28px; padding: 0; }
+  .contact li { margin-bottom: 7px; font-size: .9rem; }
+  .contact .lbl {
+    font-family: var(--mono);
+    font-size: .68rem;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--faint);
+    display: inline-block;
+    width: 64px;
+  }
+
+  nav.toc { margin-top: auto; }
+  nav.toc a {
+    display: block;
+    font-family: var(--mono);
+    font-size: .78rem;
+    letter-spacing: .03em;
+    color: var(--muted);
+    padding: 5px 0;
+    border-left: 2px solid transparent;
+    padding-left: 12px;
+    transition: color .15s, border-color .15s;
+  }
+  nav.toc a:hover { color: var(--ink); text-decoration: none; }
+  nav.toc a.active { color: var(--accent); border-left-color: var(--accent); }
+
+  /* ---------- MAIN ---------- */
+  main { padding: 52px 0 96px; min-width: 0; }
+
+  section { padding-bottom: 52px; scroll-margin-top: 40px; }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: .72rem;
+    text-transform: uppercase;
+    letter-spacing: .14em;
+    color: var(--accent);
+    margin: 0 0 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .eyebrow::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+  .lead {
+    font-size: 1.12rem;
+    line-height: 1.7;
+    color: var(--ink);
+    max-width: 60ch;
+  }
+  .lead.muted { color: var(--muted); }
+  p { max-width: 66ch; }
+
+  /* ---------- NEWS / UPDATES (signature: dated timeline) ---------- */
+  .news { list-style: none; margin: 0; padding: 0; }
+  .news-item {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    gap: 18px;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .news-item:last-child { border-bottom: none; }
+  .news-date {
+    font-family: var(--mono);
+    font-size: .76rem;
+    color: var(--faint);
+    padding-top: 2px;
+    letter-spacing: .01em;
+  }
+  .news-body { font-size: .96rem; color: var(--ink); }
+
+  /* ---------- PUBLICATIONS ---------- */
+  .pub {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 22px 24px;
+    margin-bottom: 16px;
+    background: var(--surface);
+  }
+  .pub.featured { background: var(--accent-soft); border-color: #d6e0e4; }
+  .pub-venue {
+    font-family: var(--mono);
+    font-size: .72rem;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .pub-title { font-size: 1.04rem; font-weight: 600; line-height: 1.4; margin: 0 0 6px; }
+  .pub-authors { font-size: .9rem; color: var(--muted); margin: 0 0 10px; }
+  .pub-authors .me { color: var(--ink); font-weight: 600; }
+  .pub-links { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pub-links a {
+    font-family: var(--mono);
+    font-size: .72rem;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    padding: 3px 10px;
+    border-radius: 4px;
+  }
+  .pub-links a:hover { border-color: var(--accent); text-decoration: none; }
+  .pub-figure { width: 100%; border-radius: 6px; border: 1px solid var(--line); margin: 4px 0 14px; display: block; }
+
+  /* ---------- ENTRY (experience, education) ---------- */
+  .entry {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 6px 24px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .entry:last-child { border-bottom: none; }
+  .entry-head { font-size: 1.02rem; font-weight: 600; margin: 0; }
+  .entry-org { color: var(--accent); font-weight: 500; }
+  .entry-date {
+    font-family: var(--mono);
+    font-size: .76rem;
+    color: var(--faint);
+    white-space: nowrap;
+    text-align: right;
+    padding-top: 3px;
+  }
+  .entry-points { grid-column: 1 / -1; margin: 6px 0 0; padding-left: 18px; }
+  .entry-points li { font-size: .94rem; color: var(--muted); margin-bottom: 4px; max-width: 70ch; }
+  .entry-points li strong { color: var(--ink); font-weight: 600; }
+
+  /* ---------- PROJECTS ---------- */
+  .projects { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .project {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 18px 20px;
+    background: var(--surface);
+  }
+  .project h3 { font-size: .98rem; margin: 0 0 7px; }
+  .project p { font-size: .88rem; color: var(--muted); margin: 0 0 10px; max-width: none; }
+  .project .pub-links a { font-size: .7rem; }
+  .project-thumb { width: 100%; border-radius: 6px; border: 1px solid var(--line); margin-bottom: 12px; display: block; aspect-ratio: 16/9; object-fit: cover; }
+
+  /* ---------- AWARDS ---------- */
+  .awards { list-style: none; margin: 0; padding: 0; }
+  .award {
+    display: grid;
+    grid-template-columns: 88px 1fr;
+    gap: 16px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: .95rem;
+  }
+  .award:last-child { border-bottom: none; }
+  .award .rank {
+    font-family: var(--mono);
+    font-weight: 500;
+    color: var(--accent);
+    font-size: .82rem;
+    padding-top: 1px;
+  }
+
+  /* ---------- SKILLS ---------- */
+  .skills { display: grid; gap: 14px; }
+  .skill-row { display: grid; grid-template-columns: 130px 1fr; gap: 16px; align-items: start; }
+  .skill-cat {
+    font-family: var(--mono);
+    font-size: .74rem;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: var(--faint);
+    padding-top: 5px;
+  }
+  .tags { display: flex; flex-wrap: wrap; gap: 7px; }
+  .tag {
+    font-size: .84rem;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 3px 11px;
+    background: var(--surface);
+    color: var(--ink);
+  }
+
+  /* ---------- COURSEWORK ---------- */
+  .coursework { color: var(--muted); font-size: .92rem; margin-top: 4px; }
+
+  footer {
+    grid-column: 1 / -1;
+    border-top: 1px solid var(--line);
+    padding: 26px 0 40px;
+    color: var(--faint);
+    font-family: var(--mono);
+    font-size: .74rem;
+    letter-spacing: .02em;
+  }
+
+  /* ==========================================================
+     RESPONSIVE — single column on tablet / phone
+     ========================================================== */
+  @media (max-width: 860px) {
+    .wrap { grid-template-columns: 1fr; gap: 0; }
+    .sidebar {
+      position: static; height: auto;
+      padding: 40px 0 8px;
+      border-bottom: 1px solid var(--line);
+      overflow: visible;
+    }
+    nav.toc { display: none; }       /* hide jump-nav on mobile */
+    main { padding-top: 36px; }
+    .projects { grid-template-columns: 1fr; }
+    .entry { grid-template-columns: 1fr; }
+    .entry-date { text-align: left; padding-top: 0; }
+    .news-item { grid-template-columns: 78px 1fr; gap: 12px; }
+    .skill-row { grid-template-columns: 1fr; gap: 6px; }
+  }
+  @media (max-width: 480px) {
+    .wrap { padding: 0 20px; }
+    .name { font-size: 1.45rem; }
+  }
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+  <!-- ============================================================
+       SIDEBAR — identity, contact, jump navigation
+       ============================================================ -->
+  <aside class="sidebar">
+    <!-- Profile photo: drop a file at images/profile.jpg in your repo.
+         Until it exists, the "AD" monogram shows instead (automatic fallback). -->
+    <img class="avatar" src="images/profile.jpg" alt="Alperen Demirci"
+         onerror="this.style.display='none';document.getElementById('mono').style.display='flex';" />
+    <div class="monogram" id="mono" aria-hidden="true" style="display:none;">AD</div>
+
+    <h1 class="name">Alperen Demirci</h1>
+    <p class="role">AI Engineer Student &amp; Researcher</p>
+    <p class="place">Ankara, Türkiye</p>
+
+    <ul class="contact">
+      <!-- TODO: fill in your real email / profile URLs below -->
+      <li><span class="lbl">Email</span><a href="mailto:alperendemirci65@gmail.com">alperendemirci65@gmail.com</a></li>
+      <li><span class="lbl">Phone</span><span>+90 543 677 19 28</span></li>
+      <li><span class="lbl">GitHub</span><a href="https://github.com/alperendemirciai">github.com/alperendemirciai</a></li>
+      <li><span class="lbl">LinkedIn</span><a href="#">https://www.linkedin.com/in/alperendemirci/</a></li>
+      <li><span class="lbl">HF</span><a href="#">https://huggingface.co/alperendemirciai</a></li>
+      <li><span class="lbl">CV</span><a href="AlperenDemirciCV.pdf">PDF</a></li>
+    </ul>
+
+    <nav class="toc" aria-label="Sections">
+      <a href="#about">About</a>
+      <a href="#news">News</a>
+      <a href="#publications">Publications</a>
+      <a href="#experience">Experience</a>
+      <a href="#education">Education</a>
+      <a href="#projects">Projects</a>
+      <a href="#awards">Awards</a>
+      <a href="#skills">Skills</a>
+    </nav>
+  </aside>
+
+  <!-- ============================================================
+       MAIN CONTENT
+       ============================================================ -->
+  <main>
+
+    <!-- ===== ABOUT ===== -->
+    <section id="about">
+      <p class="eyebrow">About</p>
+      <p class="lead">
+        I'm an Artificial Intelligence Engineer, BSc. from Hacettepe University Artificial Intelligence Engineering ranked 3<sup>rd</sup> in my cohort. My work sits at the
+        intersection of computer vision, multimodal large language models, and medical AI.
+      </p>
+      <p class="lead muted">
+        I currently research training-free evaluation of medical multimodal LLMs in the DREAM
+        program under Prof. Erkut Erdem and Prof. Aykut Erdem.
+      </p>
+    </section>
+
+    <!-- ===== NEWS / UPDATES =====
+         Add a new update by copying one .news-item block and editing the
+         date + text. Newest goes on top. -->
+    <section id="news">
+      <p class="eyebrow">News</p>
+      <ul class="news">
+
+        <li class="news-item">
+          <div class="news-date">Jun 2026</div>
+          <div class="news-body">
+            Presented our NOTA-evaluation work as a poster at the
+            <strong>CVPR 2026 MedReasoner Workshop</strong> in Denver, Colorado.
+          </div>
+        </li>
+
+        <li class="news-item">
+          <div class="news-date">Mar 2026</div>
+          <div class="news-body">
+            Paper on probing hallucination in medical reasoning models accepted to the
+            CVPR 2026 MedReasoner Workshop.
+          </div>
+        </li>
+
+        <li class="news-item">
+          <div class="news-date">Feb 2025</div>
+          <div class="news-body">
+            Joined ASELSAN as a Candidate Engineer in Computer Vision.
+          </div>
+        </li>
+
+        <!-- NEW UPDATE TEMPLATE — copy this block to the top of the list:
+        <li class="news-item">
+          <div class="news-date">Mon YYYY</div>
+          <div class="news-body">Your update text here.</div>
+        </li>
+        -->
+      </ul>
+    </section>
+
+    <!-- ===== PUBLICATIONS =====
+         Add a paper by copying a .pub block. Use class="pub featured" to
+         highlight one. Wrap your own name in <span class="me">…</span>. -->
+    <section id="publications">
+      <p class="eyebrow">Publications</p>
+
+      <article class="pub featured">
+        <div class="pub-venue">CVPR 2026 · MedReasoner Workshop (Poster)</div>
+        <!-- TODO: confirm exact title / author list before publishing -->
+        <h2 class="pub-title">When the Right Answer Is Missing: Probing Hallucination in Medical Reasoning Models via NOTA Evaluation</h2>
+        <p class="pub-authors">
+          Ezel Bayraktar, <span class="me">Alperen Demirci</span>, Bora Dere, Erkut Erdem, Aykut Erdem
+        </p>
+        <p style="font-size:.9rem;color:var(--muted);max-width:68ch;margin:0 0 12px;">
+          A training-free benchmark that injects “None of the Above” options to measure hallucination
+          in medical multimodal LLMs; 12+ architectures evaluated, including reasoning and CoT models.
+        </p>
+        <div class="pub-links">
+          <a href="https://scholar.google.com/citations?view_op=view_citation&hl=tr&user=ph6OLj0AAAAJ&citation_for_view=ph6OLj0AAAAJ:u5HHmVD_uO8C">Paper</a>
+        </div>
+      </article>
+
+      <!-- PAPER TEMPLATE — copy and edit:
+      <article class="pub">
+        <div class="pub-venue">Venue · Year</div>
+        <h2 class="pub-title">Title of the paper</h2>
+        <p class="pub-authors"><span class="me">Alperen Demirci</span>, Co-Author</p>
+        <div class="pub-links"><a href="#">Paper</a><a href="#">Code</a></div>
+      </article>
+      -->
+    </section>
+
+    <!-- ===== EXPERIENCE ===== -->
+    <section id="experience">
+      <p class="eyebrow">Experience</p>
+
+      <div class="entry">
+        <p class="entry-head">Candidate Engineer — Computer Vision · <span class="entry-org">ASELSAN</span></p>
+        <span class="entry-date">Feb 2025 – Jun 2026</span>
+        <ul class="entry-points">
+          <li>Built bidirectional image translation with a custom GAN; ranked <strong>3<sup>rd</sup>/40</strong> in an internal engineering contest.</li>
+          <li>Deployed a real-time object-detection and tracking pipeline.</li>
+          <li>Matched object-detection performance at <strong>5× lower compute</strong>; cut inference latency <strong>2×</strong> via TensorRT &amp; ONNX.</li>
+        </ul>
+      </div>
+
+      <div class="entry">
+        <p class="entry-head">Undergraduate Researcher — Multimodal LLMs · <span class="entry-org">Hacettepe / Koç University</span></p>
+        <span class="entry-date">Feb 2025 – Jun 2026</span>
+        <ul class="entry-points">
+          <li>Supervised by Prof. Erkut Erdem &amp; Prof. Aykut Erdem (DREAM program).</li>
+          <li>Proposed a training-free hallucination benchmark for medical MLLMs; evaluated 12+ architectures (Qwen-Thinking, InternVL3.5, MedGemma).</li>
+          <li>Paper accepted at the CVPR 2026 MedReasoner Workshop (poster, Denver, Colorado).</li>
+        </ul>
+      </div>
+
+      <div class="entry">
+        <p class="entry-head">Data Science Intern · <span class="entry-org">Jotform</span></p>
+        <span class="entry-date">Aug – Sep 2024</span>
+        <ul class="entry-points">
+          <li>Built a text-prompt avatar personalizer — ranked <strong>1<sup>st</sup>/60</strong> among interns; shipped to production in Jotform Agent Personalization.</li>
+        </ul>
+      </div>
+
+      <div class="entry">
+        <p class="entry-head">Research Intern — Financial Vision · <span class="entry-org">Hacettepe University CV Lab</span></p>
+        <span class="entry-date">Jun – Aug 2024</span>
+        <ul class="entry-points">
+          <li>Trained ResNet18 with self-supervised learning (Lightly) for chart-pattern classification; <strong>F1 = 0.93</strong> on 1,250 images.</li>
+          <li>Constructed the CPVD dataset and released it on HuggingFace. (Paper under revision)</li>
+        </ul>
+      </div>
+
+      <div class="entry">
+        <p class="entry-head">Teaching Assistant — Data Science Lab · <span class="entry-org">Hacettepe University</span></p>
+        <span class="entry-date">Oct 2024 – Jan 2025</span>
+        <ul class="entry-points">
+          <li>Prepared lab materials and led recitations for AIN214 under Prof. Nazlı İkizler Cinbiş.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== EDUCATION ===== -->
+    <section id="education">
+      <p class="eyebrow">Education</p>
+      <div class="entry">
+        <p class="entry-head">B.Sc. Artificial Intelligence Engineering · <span class="entry-org">Hacettepe University</span></p>
+        <span class="entry-date">2022 – 2026 (Expected)</span>
+        <ul class="entry-points">
+          <li>GPA <strong>3.58 / 4.00</strong> — ranked <strong>3<sup>rd</sup></strong> in cohort.</li>
+        </ul>
+        <p class="coursework" style="grid-column:1/-1;">
+          <strong style="color:var(--ink);font-weight:600;">Relevant coursework:</strong>
+          Computational Photography, Computer Vision, Information Retrieval, Data Structures &amp; Algorithms,
+          Statistics &amp; Probability, Machine Learning, Ethics for AI, Principles of AI, Theory of Computation, Automata Theory.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== PROJECTS ===== -->
+    <section id="projects">
+      <p class="eyebrow">Selected Projects</p>
+      <div class="projects">
+
+        <article class="project">
+          <h3>EOMMData</h3>
+          <p>End-to-end pipeline for a multiview remote-sensing VQA dataset — generates questions from OSM data and retrieves satellite &amp; street-view imagery (Sentinel-2, IGN, ESRI, NAIP).</p>
+          <div class="pub-links"><a href="#">Code</a></div>
+        </article>
+
+        <article class="project">
+          <h3>NOTA-Bench</h3>
+          <p>Benchmark pipeline for medical multimodal LLMs on VQA, using inference engines such as vLLM and OpenRouter. (CVPR 2026 MedReasoner Workshop)</p>
+          <div class="pub-links"><a href="#">Code</a></div>
+        </article>
+
+        <article class="project">
+          <h3>SSL for Financial Pattern Recognition</h3>
+          <p>SimCLR / BYOL / Barlow Twins on ResNet18, pre-trained on 10 years of NIFTY50 (5-min). Detects head-and-shoulders, flags &amp; more. (Paper under revision)</p>
+        </article>
+
+        <article class="project">
+          <h3>RGB → Thermal Translation + SR</h3>
+          <p>Caltech Aerial RGBT dataset (ECCV 2024); RGB-to-thermal translation at 17.0 PSNR / 0.53 SSIM.</p>
+          <div class="pub-links"><a href="#">Code</a></div>
+        </article>
+
+        <article class="project">
+          <h3>SingleLDR2HDR</h3>
+          <p>MobileNetV3 encoder–decoder for tonemapped HDR prediction from a single LDR image; 15.2 PSNR / 0.87 SSIM.</p>
+          <div class="pub-links"><a href="#">Code</a></div>
+        </article>
+
+        <article class="project">
+          <h3>Earthquake Motif Mining</h3>
+          <p>SAX/PAA + GPU-STUMPY on the STEAD dataset for seismic pattern discovery across 3-channel signals.</p>
+          <div class="pub-links"><a href="#">Code</a></div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ===== AWARDS ===== -->
+    <section id="awards">
+      <p class="eyebrow">Awards &amp; Achievements</p>
+      <ul class="awards">
+        <li class="award"><span class="rank">1st / 60</span><span>Jotform Internship Award — Best Data Project, 2024</span></li>
+        <li class="award"><span class="rank">3rd / 40</span><span>AYetenek3 — ASELSAN Project Contest</span></li>
+        <li class="award"><span class="rank">2nd / 29</span><span>HU AI Club Finance Datathon</span></li>
+        <li class="award"><span class="rank">10th / 100</span><span>OPC Competitive Programming Contest 2024, by inzva</span></li>
+        <li class="award"><span class="rank">10th / 150</span><span>ALPOC Competitive Programming Contest 2025</span></li>
+        <li class="award"><span class="rank">19th / 92</span><span>ITU AI Club Datathon — geo-localization (avg. Haversine dist. 0.20)</span></li>
+        <li class="award"><span class="rank">Finalist</span><span>Midas Talent League 2026 — Final Nominee</span></li>
+      </ul>
+    </section>
+
+    <!-- ===== SKILLS ===== -->
+    <section id="skills">
+      <p class="eyebrow">Technical Skills</p>
+      <div class="skills">
+        <div class="skill-row">
+          <span class="skill-cat">ML / DL</span>
+          <div class="tags">
+            <span class="tag">PyTorch</span><span class="tag">HuggingFace Transformers</span>
+            <span class="tag">OpenCV</span><span class="tag">scikit-learn</span><span class="tag">Lightly</span>
+          </div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-cat">Deployment</span>
+          <div class="tags">
+            <span class="tag">TensorRT</span><span class="tag">ONNX</span><span class="tag">Docker</span><span class="tag">vLLM</span>
+          </div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-cat">Research</span>
+          <div class="tags">
+            <span class="tag">Multimodal LLMs</span><span class="tag">GANs</span>
+            <span class="tag">Object Detection / Tracking</span><span class="tag">Self-Supervised Learning</span>
+            <span class="tag">Image-to-Image Translation</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    © <span id="year"></span> Alperen Demirci · Built with HTML &amp; CSS · Hosted on GitHub Pages
+  </footer>
+
 </div>
 
-<!-- Page Content -->
-<div class="w3-padding-large" id="main">
-  <!-- Header/Home -->
-  <header class="w3-container w3-padding-32 w3-center w3-black" id="home">
-    <h1 class="w3-jumbo"><span class="w3-hide-small">This is</span> Alperen Demirci.</h1>
-    <img src="images/alperen_home.jpg" alt="boy" width="90% !important" height="45% !important">
-    <h1 class="w3-hide-small"><span class="w3-hide-small">AI </span>Engineering Student</h1>
-  </header>
+<script>
+  // Current year in footer
+  document.getElementById("year").textContent = new Date().getFullYear();
 
-  <!-- About Section -->
-  <div class="w3-content w3-justify w3-text-grey w3-padding-64" id="about">
-    <h2 class="w3-text-light-grey"> About Me </h2>
-    <hr style="width:200px" class="w3-opacity">
-    <p>
-      First of all I'm Alperen and I have born in Izmir in 2004.I am an AI Engineering student who has interest in electronics,cars,machine learning/artificial intelligence.I have graduated from IAOIZ Nedim Uysal Technical Highchool in 2022.I have made several projects with Arduino such as Remote Car(Bluetooth), Industrial Temperature Display, 3D Plotter , MiniWar Robot.I have experience in different languages e.g. Python,Java,C++,Arduino,Ladder.Since I have graduated from Electronics in highschool,I have worked with different types of sensors.I am also interested in Android Development and developed basic apps.My aim is to learn and implement ML beneficially on different industries.
-    </p>
-    <h3 class="w3-padding-16 w3-text-light-grey">My Skills</h3>
-    <p class="w3-wide">Python</p>
-    <div class="w3-white">
-      <div class="w3-dark-grey" style="height:28px;width:70%"></div>
-    </div>
-    <p class="w3-wide">C++</p>
-    <div class="w3-white">
-      <div class="w3-dark-grey" style="height:28px;width:75%"></div>
-    </div>
-    <p class="w3-wide">ML</p>
-    <div class="w3-white">
-      <div class="w3-dark-grey" style="height:28px;width:55%"></div>
-    </div><br>
-    <p class="w3-wide">Basic Electronics</p>
-    <div class="w3-white">
-      <div class="w3-dark-grey" style="height:28px;width:65%"></div>
-    </div><br>
-    <p class="w3-wide">Presentation</p>
-    <div class="w3-white">
-      <div class="w3-dark-grey" style="height:28px;width:70%"></div>
-    </div><br>
-    <p class="w3-wide">Photography</p>
-    <div class="w3-white">
-      <div class="w3-dark-grey" style="height:28px;width:40%"></div>
-    </div>
-    
+  // Scroll-spy: highlight the active section in the side nav
+  (function () {
+    var links = Array.prototype.slice.call(document.querySelectorAll("nav.toc a"));
+    var map = {};
+    links.forEach(function (a) { map[a.getAttribute("href").slice(1)] = a; });
+    var sections = links.map(function (a) {
+      return document.getElementById(a.getAttribute("href").slice(1));
+    }).filter(Boolean);
 
-  <!-- Contact Section -->
-  <div class="w3-padding-64 w3-content w3-text-grey" id="contact">
-    <h2 class="w3-text-light-grey">Contact Me</h2>
-    <hr style="width:200px" class="w3-opacity">
-
-    <div class="w3-section">
-      <p><i class="fa fa-map-marker fa-fw w3-text-white w3-xxlarge w3-margin-right"></i> Izmir - Turkey</p>
-      <i class="fa fa-phone fa-fw w3-text-white w3-xxlarge w3-margin-right"></i>
-      <a href="tel:905436771928" <p>Tel: +90 543 677 19 28 </p> </a>
-      <i class="fa fa-envelope fa-fw w3-text-white w3-xxlarge w3-margin-right"> </i>
-      <a href="mailto:demircialperen@hotmail.com?subject=Mail%20from%20Website%20"
-      <p>demircialperen@hotmail.com</p> </a>
-    </div><br>
-  
-    <a href="https://www.linkedin.com/in/alperen-demirci-931862247/" class="fa fa-linkedin w3-jumbo -opacity">
-      <i class="icon-linkedin"></i>
-      <i class="icon-linkedin"></i>
-   </a>
-   &nbsp &nbsp &nbsp &nbsp
-   
-   <a href="https://www.instagram.com/alperen_demirci_95/" class="fa fa-instagram w3-jumbo -opacity">
-    <i class="icon-linkedin"></i>
-    <i class="icon-linkedin"></i>
-   </a>
-    &nbsp &nbsp &nbsp &nbsp
-
-    <a href="https://github.com/alperendemirciai/AIN200" class="fa fa-user w3-jumbo -opacity">
-    <i class="icon-presentation"></i>
-    <i class="icon-presentation"></i>
-   </a>
-
-
-<!-- END PAGE CONTENT -->
-</div>
-
+    if (!("IntersectionObserver" in window)) return;
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          links.forEach(function (l) { l.classList.remove("active"); });
+          if (map[e.target.id]) map[e.target.id].classList.add("active");
+        }
+      });
+    }, { rootMargin: "-30% 0px -60% 0px" });
+    sections.forEach(function (s) { obs.observe(s); });
+  })();
+</script>
 </body>
 </html>
-
